@@ -10,7 +10,7 @@
 #define DO 2
 #define KILL 1
 #define REQUEST 5
-#define SCALE 6
+#define SCALE 1000
 
 double a = 0.00001;
 double b = 2.5;
@@ -144,7 +144,7 @@ double fast_integration(int id_request, int proc_count, double lhs, double rhs, 
 		arr[i] = malloc(1 * sizeof(struct lineSegment));	
 	}
 
-	dispenser_for_sin(arr, line_count); 
+	dispenser(arr, line_count); 
 
 	for (i = 0; i < line_count; i++) {
 		printf("line_count: %d lhs %f rhs %f\n", line_count, arr[i]->lhs, arr[i]->rhs);
@@ -154,7 +154,7 @@ double fast_integration(int id_request, int proc_count, double lhs, double rhs, 
 		if (k < proc_count) {
 			data[k].threadID = k;
 			data[k].id_request = id_request;
-                        data[k].err = err / line_count;
+                        data[k].err = err / sqrt(line_count);
 
 			pthread_create(&thread[k], NULL, thread_function, &data[k]);
 
